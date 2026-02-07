@@ -43,8 +43,7 @@
                         <option value="" disabled {% if not search_params.location %}selected{% endif %}>Select
                             Destination</option>
                         {% for loc in locations %}
-                        <option value="{{ loc }}" {% if search_params.location == loc %}selected{% endif %}>{{
-                            loc }}
+                        <option value="{{ loc }}" {% if search_params.location==loc %}selected{% endif %}>{{ loc }}
                         </option>
                         {% empty %}
                         <option value="" disabled>No destinations available</option>

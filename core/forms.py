@@ -6,8 +6,8 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = ['check_in', 'check_out']
         widgets = {
-            'check_in': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded p-2 w-full'}),
-            'check_out': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded p-2 w-full'}),
+            'check_in': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded p-2 w-full', 'id': 'id_check_in'}),
+            'check_out': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded p-2 w-full', 'id': 'id_check_out'}),
         }
 
     def clean(self):
