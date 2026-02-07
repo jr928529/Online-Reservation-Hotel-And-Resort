@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="pt-24 pb-16 bg-white">
+    <div class="container mx-auto px-6">
+        <div class="mb-12 text-center">
+            <a href="{% url 'resort_detail' resort.id %}" class="inline-block text-xs uppercase tracking-widest text-gray-500 mb-4 hover:text-primary transition-colors">&larr; Back to {{ resort.name }}</a>
+            <h1 class="text-4xl md:text-5xl font-serif mb-4">{{ room_type.name }}</h1>
+            <p class="text-xl text-gray-500 font-light">Starting from <span class="text-accent font-serif">${{ room_type.price }}</span> / night</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div class="h-96 bg-gray-100 overflow-hidden relative shadow-2xl" data-aos="fade-right">
+                <img src="{{ resort.image_url }}" alt="{{ room_type.name }}" class="w-full h-full object-cover">
+            </div>
+            <div class="" data-aos="fade-left">
+                <h3 class="text-2xl font-serif mb-6">Room Overview</h3>
+                <p class="text-gray-600 leading-relaxed mb-8">{{ room_type.description }}</p>
+                
+                <div class="grid grid-cols-2 gap-6 mb-10">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Capacity</p>
+                        <p class="font-serif text-xl">{{ room_type.capacity }} Adults</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Size</p>
+                        <p class="font-serif text-xl">45-60 m²</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">View</p>
+                        <p class="font-serif text-xl">Ocean / Garden</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Bed</p>
+                        <p class="font-serif text-xl">King Size</p>
+                    </div>
+                </div>
+
+                <a href="{% url 'book_room' resort.id room_type.id %}" class="inline-block w-full text-center bg-primary text-white py-4 uppercase tracking-widest text-sm hover:bg-accent transition-colors font-semibold">
+                    Reserve This Suite
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

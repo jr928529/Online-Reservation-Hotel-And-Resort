@@ -1,0 +1,195 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    </div>
+
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto pb-32" data-aos="fade-up"
+        data-aos-duration="1200">
+        <p class="text-sm md:text-base uppercase tracking-[0.3em] mb-4 text-accent font-semibold">Welcome to Dreams
+            Hotel & Resorts</p>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">Experience the <br /><span
+                class="italic text-accent">Extraordinary</span></h1>
+        <p class="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-2xl mx-auto">Discover a collection of
+            exclusive resorts designed for those who seek the exceptional.</p>
+        <a href="#resorts"
+            class="inline-block bg-accent hover:bg-white hover:text-primary text-white px-10 py-4 uppercase tracking-widest text-sm font-semibold transition-all duration-300">Explore
+            Collection</a>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-40 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-70">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Availability Search (Floating) -->
+<div class="relative z-20 -mt-24 container mx-auto px-6 mb-24" data-aos="fade-up" data-aos-delay="200">
+    <div
+        class="bg-white/95 backdrop-blur-md shadow-2xl p-8 md:p-10 max-w-6xl mx-auto rounded-lg border border-white/20">
+        <form action="{% url 'home' %}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+            <!-- Destination -->
+            <div class="relative group">
+                <label
+                    class="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Destination</label>
+                <div class="relative">
+                    <select name="location"
+                        class="w-full border-b-2 border-gray-200 focus:border-accent py-3 bg-transparent focus:outline-none text-gray-800 font-serif text-lg appearance-none cursor-pointer hover:border-gray-400 transition-colors">
+                        <option value="" disabled {% if not search_params.location %}selected{% endif %}>Select
+                            Destination</option>
+                        {% for loc in locations %}
+                        <option value="{{ loc }}" {% if search_params.location == loc %}selected{% endif %}>{{ loc }}
+                        </option>
+                        {% empty %}
+                        <option value="" disabled>No destinations available</option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-accent">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check-in -->
+            <div class="relative">
+                <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Check-in</label>
+                <input type="date" name="check_in" id="check_in"
+                    class="w-full border-b-2 border-gray-200 focus:border-accent py-3 bg-transparent focus:outline-none text-gray-800 font-serif text-lg placeholder-gray-400"
+                    min="{{ today|date:'Y-m-d' }}" value="{{ search_params.check_in }}">
+            </div>
+
+            <!-- Check-out -->
+            <div class="relative">
+                <label
+                    class="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Check-out</label>
+                <input type="date" name="check_out" id="check_out"
+                    class="w-full border-b-2 border-gray-200 focus:border-accent py-3 bg-transparent focus:outline-none text-gray-800 font-serif text-lg placeholder-gray-400"
+                    min="{{ today|date:'Y-m-d' }}" value="{{ search_params.check_out }}">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="h-full flex items-end">
+                <button type="submit"
+                    class="w-full bg-primary hover:bg-accent text-white py-4 px-6 uppercase tracking-widest text-sm transition-all duration-300 font-semibold shadow-lg hover:shadow-accent/30 transform hover:-translate-y-1">
+                    Check Availability
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Simple Date Validation
+    const checkInInput = document.getElementById('check_in');
+    const checkOutInput = document.getElementById('check_out');
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    checkInInput.min = today;
+    checkOutInput.min = today;
+
+    checkInInput.addEventListener('change', function () {
+        checkOutInput.min = this.value;
+        if (checkOutInput.value && checkOutInput.value < this.value) {
+            checkOutInput.value = this.value;
+        }
+    });
+</script>
+
+<!-- Featured Resorts -->
+<section id="resorts" class="py-20 bg-secondary">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-serif text-primary mb-4">Curated Destinations</h2>
+            <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+            <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">Each of our locations is carefully
+                selected to offer an immersive experience that connects you with the beauty of your surroundings.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for resort in resorts %}
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+                <div class="relative h-96 overflow-hidden mb-6">
+                    <div
+                        class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10">
+                    </div>
+                    <img src="{{ resort.image_url }}" alt="{{ resort.name }}"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute top-6 right-6 z-20 bg-white px-4 py-2 text-xs uppercase tracking-widest font-bold">
+                        {{ resort.location }}
+                    </div>
+                </div>
+                <h3 class="text-2xl font-serif text-primary mb-2 group-hover:text-accent transition-colors">{{
+                    resort.name }}</h3>
+                <p class="text-gray-500 line-clamp-2 mb-6 text-sm leading-relaxed">{{ resort.description }}</p>
+                <a href="{% url 'resort_detail' resort.id %}"
+                    class="inline-block text-xs uppercase tracking-widest border-b border-primary pb-1 group-hover:border-accent group-hover:text-accent transition-colors">
+                    Discover More
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Amenities/Features -->
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="relative" data-aos="fade-right">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-gray-100 z-0"></div>
+            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                alt="Spa" class="relative z-10 w-full shadow-xl">
+        </div>
+        <div data-aos="fade-left">
+            <h2 class="text-4xl md:text-5xl font-serif text-primary mb-6">Wellness & <span
+                    class="text-accent italic">Relaxation</span></h2>
+            <p class="text-gray-500 text-lg leading-relaxed mb-8">Reconnect with yourself in our world-class spas. From
+                ancient healing traditions to modern therapies, every detail is designed to restore balance and harmony
+                to your mind, body, and spirit.</p>
+
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <h4 class="font-serif text-xl mb-2">Holistic Spa</h4>
+                    <p class="text-sm text-gray-500">Ancient therapies meets modern science.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-2">Infinity Pools</h4>
+                    <p class="text-sm text-gray-500">Immersive pools with breathtaking views.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-2">Gourmet Dining</h4>
+                    <p class="text-sm text-gray-500">Locally sourced organic ingredients.</p>
+                </div>
+                <div>
+                    <h4 class="font-serif text-xl mb-2">Private Villas</h4>
+                    <p class="text-sm text-gray-500">Secluded sanctuaries for utmost privacy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial -->
+<section class="py-24 bg-dark-bg text-white text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+    <div class="container mx-auto px-6 relative z-10" data-aos="fade-up">
+        <svg class="w-12 h-12 text-accent mx-auto mb-8 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+            <path
+                d="M14.017 21L14.017 18C14.017 16.896 14.389 16.03 15.132 15.401C15.875 14.772 16.904 14.288 18.219 13.948C18.423 13.896 18.598 13.784 18.742 13.611C18.887 13.438 18.96 13.238 18.96 13.012L18.96 10.992C18.96 10.835 18.906 10.697 18.799 10.579C18.692 10.461 18.563 10.401 18.411 10.401L16.488 10.401C16.126 10.401 15.873 10.272 15.727 10.015C15.582 9.757 15.509 9.387 15.509 8.906C15.509 8.544 15.659 8.363 15.959 8.363L18.411 8.363C18.563 8.363 18.692 8.304 18.799 8.186C18.906 8.068 18.96 7.929 18.96 7.772L18.96 3.657C18.96 3.501 18.906 3.363 18.799 3.245C18.692 3.127 18.563 3.068 18.411 3.068L12.553 3.068C12.402 3.068 12.272 3.127 12.165 3.245C12.059 3.363 12.005 3.501 12.005 3.657L12.005 13.657C12.005 16.634 12.604 18.814 13.803 20.198C15.002 21.581 16.736 22.273 19.005 22.273L19.005 18.756C19.005 18.599 18.951 18.461 18.844 18.343C18.737 18.225 18.608 18.166 18.456 18.166L18.17 18.166C16.793 18.166 15.688 17.846 14.856 17.206C14.296 16.772 14.017 16.03 14.017 14.981L14.017 21ZM4.912 21L4.912 18C4.912 16.896 5.284 16.03 6.027 15.401C6.77 14.772 7.799 14.288 9.114 13.948C9.318 13.896 9.493 13.784 9.638 13.611C9.783 13.438 9.855 13.238 9.855 13.012L9.855 10.992C9.855 10.835 9.801 10.697 9.694 10.579C9.587 10.461 9.458 10.401 9.306 10.401L7.382 10.401C7.021 10.401 6.768 10.272 6.622 10.015C6.477 9.757 6.404 9.387 6.404 8.906C6.404 8.544 6.554 8.363 6.854 8.363L9.306 8.363C9.458 8.363 9.587 8.304 9.694 8.186C9.801 8.068 9.855 7.929 9.855 7.772L9.855 3.657C9.855 3.501 9.801 3.363 9.694 3.245C9.587 3.127 9.458 3.068 9.306 3.068L3.448 3.068C3.297 3.068 3.167 3.127 3.06 3.245C2.954 3.363 2.9 3.501 2.9 3.657L2.9 13.657C2.9 16.634 3.499 18.814 4.698 20.198C5.897 21.581 7.632 22.273 9.9 22.273L9.9 18.756C9.9 18.599 9.846 18.461 9.739 18.343C9.632 18.225 9.503 18.166 9.351 18.166L9.065 18.166C7.688 18.166 6.583 17.846 5.751 17.206C5.192 16.772 4.912 16.03 4.912 14.981L4.912 21Z" />
+        </svg>
+        <p class="text-2xl md:text-3xl font-serif italic leading-relaxed mb-6">"An unforgettable escape. The attention
+            to detail, the serene atmosphere, and the impeccable service made this our best vacation ever."</p>
+        <div class="font-sans uppercase tracking-widest text-sm text-accent">Sarah & Thomas Jenkins</div>
+        <div class="text-xs text-gray-500 mt-1">Guests at Alpine Heaven</div>
+    </div>
+</section>
+{% endblock %}

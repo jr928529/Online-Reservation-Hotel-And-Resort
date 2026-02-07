@@ -1,0 +1,56 @@
+{% extends 'core/admin/base_admin.html' %}
+
+{% block title %}Resorts | Dreams Admin{% endblock %}
+{% block header_title %}Manage Resorts{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-lg font-serif font-bold text-primary">All Resorts</h3>
+        <a href="{% url 'admin_resort_create' %}"
+            class="bg-primary text-white px-4 py-2 text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors">Add
+            Resort</a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Name</th>
+                    <th class="px-6 py-3 font-medium">Location</th>
+                    <th class="px-6 py-3 font-medium">Category</th>
+                    <th class="px-6 py-3 font-medium text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for resort in resorts %}
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full object-cover" src="{{ resort.image_url }}" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">{{ resort.name }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ resort.location }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ resort.category }}</td>
+                    <td class="px-6 py-4 text-right text-sm font-medium">
+                        <a href="{% url 'admin_resort_update' resort.info.pk|default:resort.pk %}"
+                            class="text-accent hover:text-accent-hover mr-3">Edit</a>
+                        <a href="{% url 'admin_resort_delete' resort.info.pk|default:resort.pk %}"
+                            class="text-red-600 hover:text-red-900">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-8 text-center text-gray-500">No resorts found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

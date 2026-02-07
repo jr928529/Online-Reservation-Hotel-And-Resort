@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard | Dreams Hotel{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1a1a1a',      /* Deep Charcoal */
+                        secondary: '#F9F9F9',    /* Off-white/Cream */
+                        accent: '#D4AF37',       /* Gold */
+                        'accent-hover': '#C5A028',
+                        'dark-bg': '#0f0f0f',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 font-sans text-primary flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-primary text-white flex flex-col shadow-lg">
+        <div class="h-16 flex items-center justify-center border-b border-gray-800">
+            <a href="{% url 'admin_dashboard' %}" class="text-xl font-serif font-bold tracking-widest text-accent">
+                DREAMS ADMIN
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-2 px-4">
+                <li>
+                    <a href="{% url 'admin_dashboard' %}"
+                        class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-accent rounded-lg transition-colors {% if request.resolver_match.url_name == 'admin_dashboard' %}bg-gray-800 text-accent{% endif %}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_resort_list' %}"
+                        class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-accent rounded-lg transition-colors {% if 'resort' in request.resolver_match.url_name %}bg-gray-800 text-accent{% endif %}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                            </path>
+                        </svg>
+                        Resorts
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_room_list' %}"
+                        class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-accent rounded-lg transition-colors {% if 'room' in request.resolver_match.url_name %}bg-gray-800 text-accent{% endif %}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                            </path>
+                        </svg>
+                        Rooms
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_reservation_list' %}"
+                        class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-accent rounded-lg transition-colors {% if 'reservation' in request.resolver_match.url_name %}bg-gray-800 text-accent{% endif %}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        Reservations
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_user_list' %}"
+                        class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-accent rounded-lg transition-colors {% if 'user' in request.resolver_match.url_name %}bg-gray-800 text-accent{% endif %}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        Users
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit"
+                    class="flex items-center w-full px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    Logout
+                </button>
+            </form>
+            <a href="{% url 'home' %}"
+                class="flex items-center w-full px-4 py-2 mt-2 text-sm text-accent hover:text-white rounded transition-colors justify-center border border-gray-800 hover:border-gray-600">
+                View Site
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden bg-gray-50">
+        <!-- Topbar -->
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-8">
+            <h2 class="text-2xl font-serif text-primary">{% block header_title %}Dashboard{% endblock %}</h2>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm text-gray-600">Welcome, <strong>{{ user.username }}</strong></span>
+                <div class="w-8 h-8 rounded-full bg-primary text-accent flex items-center justify-center font-bold">
+                    {{ user.username|make_list|first|upper }}
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-1 overflow-y-auto p-8">
+            {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                <div
+                    class="p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+</body>
+
+</html>

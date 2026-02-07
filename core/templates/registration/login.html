@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex">
+    <!-- Image Side -->
+    <div class="hidden lg:block lg:w-1/2 relative">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-white p-12 text-center">
+            <div>
+                <h2 class="text-4xl font-serif mb-6">Welcome</h2>
+                <p class="text-lg font-light tracking-wide">Continue your journey to the world's most exquisite destinations.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center bg-white p-8 md:p-16">
+        <div class="max-w-md w-full">
+            <h1 class="text-3xl font-serif text-primary mb-2">Sign In</h1>
+            <p class="text-gray-500 mb-10">Access your account to manage reservations.</p>
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="bg-red-50 text-red-500 p-4 text-sm rounded">
+                    Incorrect username or password.
+                </div>
+                {% endif %}
+
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Username</label>
+                    <input type="text" name="username" class="w-full border-b border-gray-300 py-3 focus:border-accent focus:outline-none transition-colors text-lg" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Password</label>
+                    <input type="password" name="password" class="w-full border-b border-gray-300 py-3 focus:border-accent focus:outline-none transition-colors text-lg" required>
+                </div>
+
+                <div class="flex items-center justify-between mt-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="form-checkbox text-accent">
+                        <span class="ml-2 text-sm text-gray-500">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-accent hover:underline">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="w-full bg-primary text-white py-4 uppercase tracking-widest text-sm hover:bg-accent transition-colors font-semibold mt-8">
+                    Log In
+                </button>
+            </form>
+
+            <p class="mt-8 text-center text-gray-500 text-sm">
+                Don't have an account? <a href="{% url 'register' %}" class="text-primary font-bold hover:text-accent transition-colors">Join Skyline</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

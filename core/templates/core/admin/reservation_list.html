@@ -1,0 +1,70 @@
+{% extends 'core/admin/base_admin.html' %}
+
+{% block title %}Reservations | Dreams Admin{% endblock %}
+{% block header_title %}Manage Reservations{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-lg font-serif font-bold text-primary">All Reservations</h3>
+        <!-- Filter or search could go here -->
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                <tr>
+                    <th class="px-6 py-3 font-medium">ID</th>
+                    <th class="px-6 py-3 font-medium">Guest</th>
+                    <th class="px-6 py-3 font-medium">Room</th>
+                    <th class="px-6 py-3 font-medium">Dates</th>
+                    <th class="px-6 py-3 font-medium">Status</th>
+                    <th class="px-6 py-3 font-medium">Payment</th>
+                    <th class="px-6 py-3 font-medium text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for res in reservations %}
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">#{{ res.id }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                        {{ res.user.username }}<br>
+                        <span class="text-xs text-gray-400">{{ res.user.email }}</span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ res.room }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                        <div class="flex flex-col">
+                            <span>In: {{ res.check_in|date:"M d, Y" }}</span>
+                            <span>Out: {{ res.check_out|date:"M d, Y" }}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {% if res.status == 'C' %}bg-green-100 text-green-800
+                        {% elif res.status == 'P' %}bg-yellow-100 text-yellow-800
+                        {% elif res.status == 'X' %}bg-red-100 text-red-800
+                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ res.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-xs font-medium 
+                        {% if res.payment_status == 'Paid' %}text-green-600{% else %}text-red-600{% endif %}">
+                            {{ res.payment_status }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm font-medium">
+                        <a href="{% url 'admin_reservation_update' res.pk %}"
+                            class="text-accent hover:text-accent-hover">Details/Update</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">No reservations found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

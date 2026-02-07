@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- Resort Hero -->
+<div class="relative h-[60vh]">
+    <img src="{{ resort.image_url }}" alt="{{ resort.name }}" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+    <div class="absolute bottom-0 left-0 p-8 md:p-16 text-white max-w-4xl" data-aos="fade-up">
+        <a href="{% url 'home' %}" class="inline-block text-xs uppercase tracking-widest text-accent mb-4 hover:text-white transition-colors">&larr; Back to Collection</a>
+        <h1 class="text-5xl md:text-7xl font-serif mb-4">{{ resort.name }}</h1>
+        <div class="flex items-center space-x-2 text-sm uppercase tracking-widest">
+            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>{{ resort.location }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+            <h2 class="text-3xl font-serif text-primary mb-8">About the Resort</h2>
+            <p class="text-gray-600 text-lg leading-relaxed mb-12 font-light">{{ resort.description }}</p>
+
+            <h3 class="text-2xl font-serif text-primary mb-8">Resort Amenities</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-16">
+                <div class="flex items-center text-gray-600">
+                    <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span>Free Wi-Fi</span>
+                </div>
+                <div class="flex items-center text-gray-600">
+                    <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                    <span>Spa & Wellness</span>
+                </div>
+                <div class="flex items-center text-gray-600">
+                    <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+                    <span>Fine Dining</span>
+                </div>
+                <!-- More dummy amenities -->
+                <div class="flex items-center text-gray-600">
+                    <svg class="w-5 h-5 mr-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+                    <span>Gym</span>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-serif text-primary mb-8" id="rooms">Accommodations</h3>
+            <div class="space-y-8">
+                {% for room_type in room_types %}
+                <div class="bg-white border border-gray-100 shadow-lg p-6 md:p-8 flex flex-col md:flex-row gap-8 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up">
+                    <div class="w-full md:w-1/3 bg-gray-100 flex items-center justify-center text-gray-300">
+                        <!-- Placeholder for room image, ideally strictly mapped in model but using resort image for generic visual -->
+                        <img src="{{ resort.image_url }}" alt="{{ room_type.name }}" class="w-full h-40 object-cover grayscale opacity-50">
+                    </div>
+                    <div class="flex-grow flex flex-col justify-center">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold font-serif">{{ room_type.name }}</h4>
+                            <div class="text-right">
+                                <span class="block text-2xl font-serif text-accent font-bold">${{ room_type.price }}</span>
+                                <span class="text-xs text-gray-400 uppercase tracking-widest">Per Night</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 mb-6 text-sm flex-grow">{{ room_type.description }}</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex items-center text-xs text-gray-500 uppercase tracking-widest">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                Up to {{ room_type.capacity }} Guests
+                            </div>
+                            <div class="space-x-2">
+                                <a href="{% url 'room_detail' resort.id room_type.id %}" class="bg-primary text-white px-6 py-2 text-xs uppercase tracking-widest hover:bg-accent transition-colors">Details</a>
+                                <a href="{% url 'book_room' resort.id room_type.id %}" class="bg-accent text-white px-6 py-2 text-xs uppercase tracking-widest hover:bg-accent-hover transition-colors">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No rooms available.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="hidden lg:block">
+            <div class="bg-white p-8 border border-gray-100 shadow-xl sticky top-32">
+                <h3 class="text-xl font-serif mb-6 text-center">Plan Your Stay</h3>
+                <p class="text-center text-gray-500 text-sm mb-8">Select a room from the list to view availability and pricing for your dates.</p>
+                <div class="text-center">
+                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Need Assistance?</p>
+                    <p class="font-serif text-lg text-primary">+1 (800) SKY-LINE</p>
+                    <p class="text-sm text-gray-500 mt-1">concierge@skyline.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

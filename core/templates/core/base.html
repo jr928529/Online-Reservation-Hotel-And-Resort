@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dreams | Hotel & Resort{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1a1a1a',      /* Deep Charcoal */
+                        secondary: '#F9F9F9',    /* Off-white/Cream */
+                        accent: '#D4AF37',       /* Gold */
+                        'accent-hover': '#C5A028',
+                        'dark-bg': '#0f0f0f',
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5))",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .gold-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .gold-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s ease;
+        }
+
+        .gold-underline:hover::after {
+            width: 100%;
+        }
+
+        /* Nav Transition */
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+    </style>
+</head>
+
+<body class="bg-secondary text-primary antialiased flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-300 px-6 py-6 bg-transparent text-white group hover:bg-white hover:text-primary hover:shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-2xl md:text-3xl font-bold tracking-widest font-serif">
+                DREAMS HOTEL
+            </a>
+
+            <div class="hidden md:flex space-x-8 items-center text-sm uppercase tracking-widest font-medium">
+                <a href="{% url 'home' %}" class="hover:text-accent transition-colors">Resorts</a>
+                <!-- <a href="#" class="hover:text-accent transition-colors">Experiences</a> -->
+                <!-- <a href="#" class="hover:text-accent transition-colors">About</a> -->
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'my_reservations' %}" class="hover:text-accent transition-colors">My TRIPS</a>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="hover:text-red-500 transition-colors ml-4">LOGOUT</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="hover:text-accent transition-colors">Login</a>
+                <a href="{% url 'register' %}"
+                    class="border border-current px-6 py-2 hover:bg-accent hover:border-accent hover:text-white transition-all">Book
+                    Now</a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-grow pt-0">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg text-white pt-20 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-1">
+                <h3 class="text-2xl font-serif mb-6 tracking-widest">DREAMS HOTEL & RESORT</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">is a place where guests can stay, rest, and enjoy
+                    comfortable rooms and quality services during their visit.</p>
+                <div class="flex space-x-4">
+                    <!-- Social icons placeholder -->
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer">
+                        IG</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer">
+                        FB</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer">
+                        TW</div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Destinations</h4>
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li><a href="#" class="hover:text-accent transition">Boracay</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Baguio</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Sagada</a></li>
+                    <li><a href="#" class="hover:text-accent transition">La Union</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Bohol</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Siargao</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Cebu</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Palawan</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Company</h4>
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li><a href="#" class="hover:text-accent transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Careers</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Press</a></li>
+                    <li><a href="#" class="hover:text-accent transition">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Newsletter</h4>
+                <p class="text-gray-400 text-sm mb-4">Subscribe for exclusive offers and updates.</p>
+                <form class="flex border-b border-gray-700 pb-2">
+                    <input type="email" placeholder="Your Email Address"
+                        class="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none text-sm">
+                    <button type="submit" class="text-xs uppercase tracking-widest hover:text-accent">Send</button>
+                </form>
+            </div>
+        </div>
+
+        <div
+            class="container mx-auto px-6 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <p>&copy; 2026 DREAMS Hotel & Resorts. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled', 'text-primary');
+                navbar.classList.remove('text-white', 'bg-transparent', 'py-6');
+            } else {
+                navbar.classList.remove('nav-scrolled', 'text-primary');
+                navbar.classList.add('text-white', 'bg-transparent', 'py-6');
+            }
+        });
+    </script>
+</body>
+
+</html>

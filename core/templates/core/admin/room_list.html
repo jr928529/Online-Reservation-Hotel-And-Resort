@@ -1,0 +1,56 @@
+{% extends 'core/admin/base_admin.html' %}
+
+{% block title %}Rooms | Dreams Admin{% endblock %}
+{% block header_title %}Manage Rooms{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-lg font-serif font-bold text-primary">All Rooms</h3>
+        <a href="{% url 'admin_room_create' %}"
+            class="bg-primary text-white px-4 py-2 text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors">Add
+            Room</a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Resort</th>
+                    <th class="px-6 py-3 font-medium">Room Number</th>
+                    <th class="px-6 py-3 font-medium">Type</th>
+                    <th class="px-6 py-3 font-medium">Status</th>
+                    <th class="px-6 py-3 font-medium text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for room in rooms %}
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ room.resort.name }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ room.number }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">{{ room.room_type.name }}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {% if room.status == 'A' %}bg-green-100 text-green-800
+                        {% elif room.status == 'M' %}bg-red-100 text-red-800
+                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ room.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm font-medium">
+                        <a href="{% url 'admin_room_update' room.pk %}"
+                            class="text-accent hover:text-accent-hover mr-3">Edit</a>
+                        <a href="{% url 'admin_room_delete' room.pk %}"
+                            class="text-red-600 hover:text-red-900">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">No rooms found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
