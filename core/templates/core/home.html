@@ -42,13 +42,20 @@
                         class="w-full border-b-2 border-gray-200 focus:border-accent py-3 bg-transparent focus:outline-none text-gray-800 font-serif text-lg appearance-none cursor-pointer hover:border-gray-400 transition-colors">
                         <option value="" disabled {% if not search_params.location %}selected{% endif %}>Select
                             Destination</option>
-                        {% for loc in locations %}
-                        <option value="{{ loc }}" {% if search_params.location == loc %}selected{% endif %}>{{
-                            loc }}
+                        <option value="Boracay" {% if search_params.location == "Boracay" %}selected{% endif %}>Boracay
                         </option>
-                        {% empty %}
-                        <option value="" disabled>No destinations available</option>
-                        {% endfor %}
+                        <option value="Baguio" {% if search_params.location == "Baguio" %}selected{% endif %}>Baguio
+                        </option>
+                        <option value="Sagada" {% if search_params.location == "Sagada" %}selected{% endif %}>Sagada
+                        </option>
+                        <option value="La Union" {% if search_params.location == "La Union" %}selected{% endif %}>La Union
+                        </option>
+                        <option value="Bohol" {% if search_params.location == "Bohol" %}selected{% endif %}>Bohol</option>
+                        <option value="Siargao" {% if search_params.location == "Siargao" %}selected{% endif %}>Siargao
+                        </option>
+                        <option value="Cebu" {% if search_params.location == "Cebu" %}selected{% endif %}>Cebu</option>
+                        <option value="Palawan" {% if search_params.location == "Palawan" %}selected{% endif %}>Palawan
+                        </option>
                     </select>
                     <div class="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-accent">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,11 +193,8 @@
         <svg class="w-12 h-12 text-accent mx-auto mb-8 opacity-50" fill="currentColor" viewBox="0 0 24 24">
             <path
                 d="M14.017 21L14.017 18C14.017 16.896 14.389 16.03 15.132 15.401C15.875 14.772 16.904 14.288 18.219 13.948C18.423 13.896 18.598 13.784 18.742 13.611C18.887 13.438 18.96 13.238 18.96 13.012L18.96 10.992C18.96 10.835 18.906 10.697 18.799 10.579C18.692 10.461 18.563 10.401 18.411 10.401L16.488 10.401C16.126 10.401 15.873 10.272 15.727 10.015C15.582 9.757 15.509 9.387 15.509 8.906C15.509 8.544 15.659 8.363 15.959 8.363L18.411 8.363C18.563 8.363 18.692 8.304 18.799 8.186C18.906 8.068 18.96 7.929 18.96 7.772L18.96 3.657C18.96 3.501 18.906 3.363 18.799 3.245C18.692 3.127 18.563 3.068 18.411 3.068L12.553 3.068C12.402 3.068 12.272 3.127 12.165 3.245C12.059 3.363 12.005 3.501 12.005 3.657L12.005 13.657C12.005 16.634 12.604 18.814 13.803 20.198C15.002 21.581 16.736 22.273 19.005 22.273L19.005 18.756C19.005 18.599 18.951 18.461 18.844 18.343C18.737 18.225 18.608 18.166 18.456 18.166L18.17 18.166C16.793 18.166 15.688 17.846 14.856 17.206C14.296 16.772 14.017 16.03 14.017 14.981L14.017 21ZM4.912 21L4.912 18C4.912 16.896 5.284 16.03 6.027 15.401C6.77 14.772 7.799 14.288 9.114 13.948C9.318 13.896 9.493 13.784 9.638 13.611C9.783 13.438 9.855 13.238 9.855 13.012L9.855 10.992C9.855 10.835 9.801 10.697 9.694 10.579C9.587 10.461 9.458 10.401 9.306 10.401L7.382 10.401C7.021 10.401 6.768 10.272 6.622 10.015C6.477 9.757 6.404 9.387 6.404 8.906C6.404 8.544 6.554 8.363 6.854 8.363L9.306 8.363C9.458 8.363 9.587 8.304 9.694 8.186C9.801 8.068 9.855 7.929 9.855 7.772L9.855 3.657C9.855 3.501 9.801 3.363 9.694 3.245C9.587 3.127 9.458 3.068 9.306 3.068L3.448 3.068C3.297 3.068 3.167 3.127 3.06 3.245C2.954 3.363 2.9 3.501 2.9 3.657L2.9 13.657C2.9 16.634 3.499 18.814 4.698 20.198C5.897 21.581 7.632 22.273 9.9 22.273L9.9 18.756C9.9 18.599 9.846 18.461 9.739 18.343C9.632 18.225 9.503 18.166 9.351 18.166L9.065 18.166C7.688 18.166 6.583 17.846 5.751 17.206C5.192 16.772 4.912 16.03 4.912 14.981L4.912 21Z" />
-        </svg>
-        <p class="text-2xl md:text-3xl font-serif italic leading-relaxed mb-6">"An unforgettable escape. The attention
-            to detail, the serene atmosphere, and the impeccable service made this our best vacation ever."</p>
-        <div class="font-sans uppercase tracking-widest text-sm text-accent">Sarah & Thomas Jenkins</div>
-        <div class="text-xs text-gray-500 mt-1">Guests at Alpine Heaven</div>
-    </div>
+            </p>
+            <div class="font-sans uppercase tracking-widest text-sm text-accent">Sarah & Thomas Jenkins</div>
+            <div class="text-xs text-gray-500 mt-1">Guests at Alpine Heaven</div>
 </section>
 {% endblock %}

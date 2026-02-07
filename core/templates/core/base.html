@@ -154,14 +154,18 @@
             <div>
                 <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Destinations</h4>
                 <ul class="space-y-3 text-sm text-gray-300">
-                    <li><a href="#" class="hover:text-accent transition">Boracay</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Baguio</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Sagada</a></li>
-                    <li><a href="#" class="hover:text-accent transition">La Union</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Bohol</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Siargao</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Cebu</a></li>
-                    <li><a href="#" class="hover:text-accent transition">Palawan</a></li>
+                    <li><a href="{% url 'home' %}?location=Boracay" class="hover:text-accent transition">Boracay</a>
+                    </li>
+                    <li><a href="{% url 'home' %}?location=Baguio" class="hover:text-accent transition">Baguio</a></li>
+                    <li><a href="{% url 'home' %}?location=Sagada" class="hover:text-accent transition">Sagada</a></li>
+                    <li><a href="{% url 'home' %}?location=La Union" class="hover:text-accent transition">La Union</a>
+                    </li>
+                    <li><a href="{% url 'home' %}?location=Bohol" class="hover:text-accent transition">Bohol</a></li>
+                    <li><a href="{% url 'home' %}?location=Siargao" class="hover:text-accent transition">Siargao</a>
+                    </li>
+                    <li><a href="{% url 'home' %}?location=Cebu" class="hover:text-accent transition">Cebu</a></li>
+                    <li><a href="{% url 'home' %}?location=Palawan" class="hover:text-accent transition">Palawan</a>
+                    </li>
                 </ul>
             </div>
 
